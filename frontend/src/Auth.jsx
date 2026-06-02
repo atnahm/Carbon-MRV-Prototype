@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const Auth = ({ setToken }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [roleInput, setRoleInput] = useState('farmer');
   const [isLogin, setIsLogin] = useState(true);
   const [message, setMessage] = useState('');
 
