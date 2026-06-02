@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Box, TextField, Button, Typography, Paper, Stack } from '@mui/material'
 
-export default function UploadData() {
+export default function UploadData({ token }) {
   const [form, setForm] = useState({
     farmer_name: '',
     farm_size: '',
@@ -26,10 +26,14 @@ export default function UploadData() {
         crop_type: form.crop_type,
         tree_count: parseInt(form.tree_count || 0, 10),
       }
-      const res = await axios.post('http://127.0.0.1:8000/upload_data', payload)
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/upload_data`, payload, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       setStatus(`Success! Saved with id ${res.data.id}`)
     } catch (err) {
-      setStatus('Failed to upload data')
+      setStatus(err.response?.data?.detail || 'Failed to upload data')
     }
   }
 
